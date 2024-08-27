@@ -16,12 +16,18 @@ int main() {
         if(input.empty()) {
             break;
         }
-
+    // exit built it
         if (input == "exit 0") {
             exit(0);
         }
 
-        std::cerr <<input << ": command not found\n";
+    //echo built in
+
+        if(input.substr(0,4)=="echo") {
+            std::cout<<input.substr(5)<<std::endl;
+        }else {
+            std::cerr <<input << ": command not found\n";
+        }
 
     }
     return 0;
