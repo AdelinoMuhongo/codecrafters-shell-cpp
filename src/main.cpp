@@ -17,6 +17,10 @@ int main() {
             break;
         }
 
+        if (input == "exit 0") {
+            exit(0);
+        }
+
         std::cerr <<input << ": command not found\n";
 
     }
