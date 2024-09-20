@@ -1,6 +1,9 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <cstdlib>
+#include <filesystem>
+#include <sstream>
 
 class Shell {
 public:
@@ -33,6 +36,7 @@ public:
                 echoCommand(input);
             }else if(command=="type") {
                 typeCommand(input.substr(5));
+
             }else {
                 std::cerr << command << ": command not found\n";
             }
@@ -57,8 +61,28 @@ private:
         if(commandMap.find(command) != commandMap.end()) {
             std::cout << commandMap[command] << std::endl;
         }else {
-            std:: cout << command << ": not found" << std::endl;
+            std::string path = findPath((command));
+            if(!path.empty()) {
+                std::cout << command << " is " << path << std::endl;
+
+            }else{
+                std:: cout << command << ": not found" << std::endl;
+            }
         }
+    }
+    std::string findPath(const std::string &command) {
+        std::string path_env = std::getenv("PATH");
+        std::stringstream ss(path_env);
+        std::string path;
+
+        while(std::getline(ss, path, ':')) {
+            std::string full_path = path + '/' + command;
+
+            if(std::filesystem::exists(full_path) && std::filesystem::is_regular_file(full_path)) {
+                return full_path;
+            }
+        }
+        return "";
     }
 };
 
