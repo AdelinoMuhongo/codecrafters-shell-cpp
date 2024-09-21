@@ -14,11 +14,14 @@ public:
         commandMap["echo"] = "echo is a shell builtin";
         commandMap["exit"] = "exit is a shell builtin";
         commandMap["type"] = "type is a shell builtin";
+        commandMap["pwd"] = "pwd is a shell builtin";
+
     }
 
     void run() {
         while (true) {
             std::cout << "$ ";
+            std::cout.flush();
             std::string input;
             std::getline(std::cin, input);
 
@@ -34,7 +37,12 @@ public:
                 echoCommand(input);
             } else if (command == "type") {
                 typeCommand(input.substr(5));
-            } else {
+            }else if (command=="pwd") {
+                pwdCommand();
+                std::cout.flush();
+            }
+
+            else {
                 runExternalCommand(command, input);
             }
         }
@@ -62,6 +70,10 @@ private:
                 std::cout << command << ": not found" << std::endl;
             }
         }
+    }
+
+    void pwdCommand() {
+        std::cout<<std::filesystem::current_path().string()<<std::endl;
     }
 
     std::string findPath(const std::string& command) {
