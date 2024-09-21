@@ -15,6 +15,7 @@ public:
         commandMap["exit"] = "exit is a shell builtin";
         commandMap["type"] = "type is a shell builtin";
         commandMap["pwd"] = "pwd is a shell builtin";
+        commandMap["cd"] = "cd is a shell builtin";
 
     }
 
@@ -40,6 +41,8 @@ public:
             }else if (command=="pwd") {
                 pwdCommand();
                 std::cout.flush();
+            }else if(command=="cd") {
+                cdCommand(input.substr((3)));
             }
 
             else {
@@ -72,9 +75,7 @@ private:
         }
     }
 
-    void pwdCommand() {
-        std::cout<<std::filesystem::current_path().string()<<std::endl;
-    }
+
 
     std::string findPath(const std::string& command) {
         std::string path_env = std::getenv("PATH");
@@ -130,6 +131,24 @@ private:
         }
         return tokens;
     }
+
+    void pwdCommand() {
+        std::cout<<std::filesystem::current_path().string()<<std::endl;
+    }
+
+    void cdCommand(const std::string& path) {
+        std::string trimmedPath = path;
+        trimmedPath.erase(0, trimmedPath.find_first_not_of(' '));
+        trimmedPath.erase(trimmedPath.find_last_not_of(' ') + 1);
+
+        if (std::filesystem::exists(trimmedPath) && std::filesystem::is_directory(trimmedPath)) {
+            std::filesystem::current_path(trimmedPath);
+        } else {
+            std::cerr << "cd: " << trimmedPath << ": No such file or directory" << std::endl;
+            std::cerr.flush();
+        }
+    }
+
 };
 
 int main() {
