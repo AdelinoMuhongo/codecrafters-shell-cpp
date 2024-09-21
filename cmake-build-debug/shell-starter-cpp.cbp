@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/mnt/c/Users/delin/Documents/Projects/CodeCrafters/codecrafters-shell-cpp/src/Shell.cpp">
+			<Option target="shell"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/delin/Documents/Projects/CodeCrafters/codecrafters-shell-cpp/src/Shell.h">
+			<Option target="shell"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/delin/Documents/Projects/CodeCrafters/codecrafters-shell-cpp/src/main.cpp">
 			<Option target="shell"/>
 		</Unit>
